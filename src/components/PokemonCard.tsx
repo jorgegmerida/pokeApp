@@ -1,3 +1,4 @@
+import { Pokemon } from "@/models";
 import {
   Stack,
   Text,
@@ -7,7 +8,10 @@ import {
   AspectRatio,
 } from "@chakra-ui/react";
 
-export default function PokemonCard({ pokemon }) {
+interface Props extends Pokemon {}
+
+export const PokemonCard: React.FC<Props> = (pokemon: Props) => {
+  console.log(pokemon);
   return (
     <Stack
       spacing="5"
@@ -22,11 +26,11 @@ export default function PokemonCard({ pokemon }) {
           src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemon.id}.png`}
         />
       </AspectRatio>
-      <Text textAlign="center" textTransform="Capitalize">
+      <Text textAlign="center" textTransform="capitalize">
         {pokemon.name}
       </Text>
       <HStack>
-        {pokemon.types.map((type) => (
+        {pokemon.types?.map((type) => (
           <Badge size="xs" key={type.slot}>
             {type.type.name}
           </Badge>
@@ -34,4 +38,4 @@ export default function PokemonCard({ pokemon }) {
       </HStack>
     </Stack>
   );
-}
+};

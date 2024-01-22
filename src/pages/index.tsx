@@ -21,14 +21,15 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import PokemonCard from "@/components/PokemonCard";
-import PokemonData from "@/components/PokemonData";
+import React from "react";
+import { PokemonCard, PokemonData } from "@/components";
+import { Pokemon } from "@/models";
 
 export default function Home() {
   const pokemonDataModal = useDisclosure();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [pokemon, setPokemon] = useState([]);
+  const [pokemons, setPokemons] = React.useState<Pokemon[]>([]);
   const [selectedPokemon, setSelectedPokemon] = useState();
   const [currentPage, setCurrentPage] = useState(
     "https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0"
@@ -36,14 +37,25 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    axios.get(currentPage).then(async ({ data }) => {
-      const promises = data.results.map((result) => axios(result.url));
-      const fetchedPokemon = (await Promise.all(promises)).map(
-        (res) => res.data
-      );
-      setPokemon((prev) => [...prev, ...fetchedPokemon]);
-      setIsLoading(false);
-    });
+    async function getPokemon() {
+      try {
+        const res = await axios.get(currentPage);
+        if (res.data?.results!.length === 0) {
+          console.error("No hay datos");
+        } else {
+          const promises = res.data?.results.map((result) => axios(result.url));
+          const fetchedPokemon = (await Promise.all(promises)).map(
+            (res) => res.data
+          );
+
+          setPokemons((prev) => [...prev, ...fetchedPokemon]);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getPokemon();
   }, [currentPage]);
 
   function handleNextPage() {}
@@ -52,7 +64,7 @@ export default function Home() {
     setSelectedPokemon(pokemon);
     pokemonDataModal.onOpen();
   }
-
+  console.log(pokemons);
   return (
     <>
       <Head>
@@ -65,13 +77,13 @@ export default function Home() {
         <Container maxW="container.lg">
           <Stack p="5" alignItems="center" spacing="5">
             <SimpleGrid spacing="5" columns={{ base: 1, md: 5 }}>
-              {pokemon.map((pokemon) => (
+              {pokemons.map((pokemon: Pokemon) => (
                 <Box
                   as="button"
                   key={pokemon.id}
                   onClick={() => handleViewPokemon(pokemon)}
                 >
-                  <PokemonCard pokemon={pokemon} />
+                  <PokemonCard {...pokemon} />
                 </Box>
               ))}
             </SimpleGrid>
@@ -86,7 +98,7 @@ export default function Home() {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textTransform="capitalize">
-            {selectedPokemon?.name}
+            {/* {selectedPokemon && selectedPokemon?.name} */}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>

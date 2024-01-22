@@ -17,9 +17,14 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import axios from "axios";
+import React from "react";
 import { useEffect, useState } from "react";
 
-export default function PokemonData({ pokemon }) {
+interface Props {
+  pokemon: any;
+}
+
+export const PokemonData: React.FC<Props> = ({ pokemon }) => {
   const [catched, setCatched] = useState(false);
 
   return (
@@ -69,4 +74,4 @@ export default function PokemonData({ pokemon }) {
       </Stack>
     </Stack>
   );
-}
+};
