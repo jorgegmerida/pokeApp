@@ -33,8 +33,12 @@ export const Header: React.FC = (props) => {
         </Heading>
       </Flex>
 
-      <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
-        <HamburgerIcon />
+      <Box
+        display={{ base: "block", md: "none" }}
+        cursor={"pointer"}
+        onClick={handleToggle}
+      >
+        <HamburgerIcon height={20} width={30} />
       </Box>
 
       <Stack
@@ -52,6 +56,7 @@ export const Header: React.FC = (props) => {
 
       <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}
+        ml={{ base: -5, md: 4 }}
         mt={{ base: 4, md: 0 }}
       >
         <Button

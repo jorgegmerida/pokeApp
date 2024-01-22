@@ -77,14 +77,14 @@ export default function Home() {
         alignItems="center"
         minH="100vh"
         justifyContent="center"
-        marginRight={"200px"}
+        marginRight={{ sm: "0px", md: "200px" }}
       >
         <Container>
           <Stack p="5" alignItems="center" spacing="4">
             <SimpleGrid
-              spacingX="440px"
+              spacingX={{ md: "440px" }}
               spacingY="20px"
-              columns={{ base: 1, md: 3 }}
+              columns={{ base: 1, sm: 1, md: 3 }}
               justifyContent={"space-between"}
             >
               {pokemons.map((pokemon: Pokemon) => (
