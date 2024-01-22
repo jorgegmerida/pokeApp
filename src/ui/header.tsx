@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
-export const Heade: React.FC = (props) => {
+export const Header: React.FC = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
   return (
@@ -22,11 +22,14 @@ export const Heade: React.FC = (props) => {
       padding={6}
       bg="teal.500"
       color="white"
+      backgroundColor={"#FF0000"}
       {...props}
+      display={"flex"}
+      position={"sticky"}
     >
       <Flex align="center" mr={5}>
         <Heading as="h1" size="lg" letterSpacing={"tighter"}>
-          Chakra UI
+          PokeApp
         </Heading>
       </Flex>
 
@@ -52,10 +55,11 @@ export const Heade: React.FC = (props) => {
         mt={{ base: 4, md: 0 }}
       >
         <Button
-          variant="outline"
-          _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+          colorScheme={"#FF0000"}
+          size={"lg"}
+          _hover={{ bg: "#D50000", borderColor: "black" }}
         >
-          Create account
+          About
         </Button>
       </Box>
     </Flex>

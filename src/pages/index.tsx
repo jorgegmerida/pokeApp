@@ -1,7 +1,5 @@
 import Head from "next/head";
-
 import { Inter, Island_Moments } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import axios from "axios";
 const inter = Inter({ subsets: ["latin"] });
 import { useEffect, useState } from "react";
@@ -24,13 +22,14 @@ import {
 import React from "react";
 import { PokemonCard, PokemonData } from "@/components";
 import { Pokemon } from "@/models";
+import { Header } from "@/ui/header";
 
 export default function Home() {
   const pokemonDataModal = useDisclosure();
 
   const [isLoading, setIsLoading] = useState(false);
   const [pokemons, setPokemons] = React.useState<Pokemon[]>([]);
-  const [selectedPokemon, setSelectedPokemon] = useState();
+  const [selectedPokemon, setSelectedPokemon] = React.useState<Pokemon>();
   const [currentPage, setCurrentPage] = useState(
     "https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0"
   );
@@ -73,10 +72,21 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Flex alignItems="center" minH="100vh" justifyContent="center">
-        <Container maxW="container.lg">
-          <Stack p="5" alignItems="center" spacing="5">
-            <SimpleGrid spacing="5" columns={{ base: 1, md: 5 }}>
+      <Header />
+      <Flex
+        alignItems="center"
+        minH="100vh"
+        justifyContent="center"
+        marginRight={"200px"}
+      >
+        <Container>
+          <Stack p="5" alignItems="center" spacing="4">
+            <SimpleGrid
+              spacingX="440px"
+              spacingY="20px"
+              columns={{ base: 1, md: 3 }}
+              justifyContent={"space-between"}
+            >
               {pokemons.map((pokemon: Pokemon) => (
                 <Box
                   as="button"
@@ -94,11 +104,11 @@ export default function Home() {
           </Stack>
         </Container>
       </Flex>
-      <Modal {...pokemonDataModal}>
+      <Modal {...pokemonDataModal} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textTransform="capitalize">
-            {/* {selectedPokemon && selectedPokemon?.name} */}
+            {selectedPokemon && selectedPokemon.name}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
