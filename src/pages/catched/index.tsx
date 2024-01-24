@@ -108,7 +108,7 @@ const Catched: React.FC<Props> = () => {
           margin={"50px 50px"}
         >
           {pokemonCatched?.map((pokemon: Pokemon, index: number) => (
-            <>
+            <Box key={index}>
               <Stack
                 direction={"column"}
                 key={index}
@@ -204,12 +204,12 @@ const Catched: React.FC<Props> = () => {
                   Free Pokemon
                 </Button>
               </Stack>
-            </>
+            </Box>
           ))}
         </SimpleGrid>
         <Modal {...pokemonDataModal} isCentered size={"xl"}>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent width={{ base: "auto", md: "100%" }}>
             <ModalHeader textTransform="capitalize">
               {selectedPokemon && selectedPokemon.name}
             </ModalHeader>
