@@ -1,7 +1,5 @@
 import Head from "next/head";
-import { Inter, Island_Moments } from "next/font/google";
 import axios from "axios";
-const inter = Inter({ subsets: ["latin"] });
 import { useEffect, useState } from "react";
 import {
   Container,
@@ -22,14 +20,16 @@ import {
 import React from "react";
 import { PokemonCard, PokemonData } from "@/components";
 import { Pokemon } from "@/models";
-import { Header } from "@/ui/header";
 
 export default function Home() {
   const pokemonDataModal = useDisclosure();
 
   const [isLoading, setIsLoading] = React.useState(false);
+
   const [pokemons, setPokemons] = React.useState<Pokemon[]>([]);
+
   const [selectedPokemon, setSelectedPokemon] = React.useState<Pokemon>();
+
   const [pokeOffset, setPokeOffset] = React.useState(0);
 
   React.useEffect(() => {
@@ -113,8 +113,8 @@ export default function Home() {
               isLoading={isLoading}
               onClick={handleNextPage}
               display={"flex"}
-              marginTop={"120px"}
-              marginBottom={10}
+              marginTop={{ sm: "80px", md: "120px" }}
+              marginBottom={{ sm: 20, md: 10 }}
               marginLeft={{ md: "300px" }}
               color={"#E2E2E2"}
               colorScheme={"#E2E2E2"}

@@ -66,10 +66,11 @@ const Catched: React.FC<Props> = () => {
     getCatchedPokemon();
   }, [deletePokemon]);
 
-  const handleFreePokemon = async (pokemonId: number) => {
+  const handleFreePokemon = async (pokemon: Pokemon) => {
     try {
-      const res = await axios.delete(`/api/catched/${pokemonId}`);
+      const res = await axios.delete(`/api/catched/${pokemon.id}`);
       if (res.status === 200) {
+        setSelectedPokemon(pokemon);
         setDataDelete(res?.data!);
         pokemonDelete.onOpen();
         setDeletePokemon(!deletePokemon);
@@ -89,6 +90,15 @@ const Catched: React.FC<Props> = () => {
   return (
     showData && (
       <>
+        <Text
+          fontSize={"xx-large"}
+          justifyContent={"center"}
+          textAlign={"center"}
+          fontWeight={"bold"}
+          marginTop={"20px"}
+        >
+          Pokemons Catcheds
+        </Text>
         <SimpleGrid
           spacingY="20px"
           columns={{ base: 1, sm: 1, md: 2, xl: 3, lg: 3 }}
@@ -189,7 +199,7 @@ const Catched: React.FC<Props> = () => {
                   width={"100%"}
                   backgroundColor={"#63b3ed"}
                   _hover={{ bg: "#3182ce", borderColor: "black" }}
-                  onClick={() => handleFreePokemon(pokemon.id)}
+                  onClick={() => handleFreePokemon(pokemon)}
                 >
                   Free Pokemon
                 </Button>
