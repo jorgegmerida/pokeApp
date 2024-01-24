@@ -79,7 +79,7 @@ const Catched: React.FC<Props> = () => {
       <>
         <SimpleGrid
           spacingY="20px"
-          columns={{ base: 1, sm: 1, md: 2, xl: 2, lg: 3 }}
+          columns={{ base: 1, sm: 1, md: 2, xl: 3, lg: 3 }}
           justifyContent={"center"}
           alignContent={"center"}
           alignItems={"center"}
@@ -92,7 +92,6 @@ const Catched: React.FC<Props> = () => {
                 key={index}
                 boxShadow="xl"
                 p="5"
-                // w="full"
                 borderRadius="xl"
                 alignItems="center"
                 width={{ xs: 200, md: 500 }}
@@ -129,25 +128,46 @@ const Catched: React.FC<Props> = () => {
                     </AspectRatio>
                     <Stack display={"flex"} direction={"column"} spacing="5">
                       <Stack direction={"row"}>
-                        <Text fontSize="small">Weight : </Text>
-                        <Text fontSize="small">{pokemon.weight}</Text>
+                        <Text fontSize={{ sm: "small", md: "large" }}>
+                          Weight :{" "}
+                        </Text>
+                        <Text fontSize={{ sm: "small", md: "large" }}>
+                          {pokemon.weight}
+                        </Text>
                       </Stack>
                       <Stack direction={"row"}>
-                        <Text fontSize="small">Height : </Text>
-                        <Text fontSize="small">{pokemon.height}</Text>
+                        <Text fontSize={{ sm: "small", md: "large" }}>
+                          Height :{" "}
+                        </Text>
+                        <Text fontSize={{ sm: "small", md: "large" }}>
+                          {pokemon.height}
+                        </Text>
                       </Stack>
                       <Stack direction={"row"}>
-                        <Text fontSize="small">Movimientos : </Text>
-                        <Text fontSize="small">{pokemon.moves?.length}</Text>
+                        <Text fontSize={{ sm: "small", md: "large" }}>
+                          Movimientos :{" "}
+                        </Text>
+                        <Text fontSize={{ sm: "small", md: "large" }}>
+                          {pokemon.moves?.length}
+                        </Text>
                       </Stack>
-                      <Stack flexDirection={"row"}>
-                        <Text fontSize="small">Tipos : </Text>
+                      <Stack direction={"row"}>
+                        <Text fontSize={{ sm: "small", md: "large" }}>
+                          Tipos:
+                        </Text>
                         <HStack>
-                          {pokemon.types?.map((type, index: number) => (
-                            <Badge fontSize="small" key={index}>
-                              <Text fontSize="small">{type.type?.name!}</Text>
-                            </Badge>
-                          ))}
+                          <Stack direction={"column"}>
+                            {pokemon.types?.map((type, index: number) => (
+                              <Badge
+                                fontSize={{ sm: "small", md: "large" }}
+                                key={index}
+                              >
+                                <Text fontSize={{ sm: "small", md: "large" }}>
+                                  {type.type?.name!}
+                                </Text>
+                              </Badge>
+                            ))}
+                          </Stack>
                         </HStack>
                       </Stack>
                     </Stack>
