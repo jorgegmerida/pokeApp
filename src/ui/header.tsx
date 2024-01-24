@@ -44,7 +44,15 @@ export const Header: React.FC = (props) => {
       position={"sticky"}
     >
       <Flex align="center" mr={5}>
-        <Heading as="h1" size="lg" letterSpacing={"tighter"}>
+        <Heading
+          as="h1"
+          size="lg"
+          letterSpacing={"tighter"}
+          onClick={() => {
+            router.push("/");
+          }}
+          cursor={"pointer"}
+        >
           PokeApp
         </Heading>
       </Flex>

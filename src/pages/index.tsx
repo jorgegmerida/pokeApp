@@ -14,6 +14,7 @@ import {
   ModalContent,
   ModalCloseButton,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
 import { PokemonCard, PokemonData } from "@/components";
@@ -39,9 +40,8 @@ export default function Home() {
 
   React.useEffect(() => {
     const endOffset = itemOffset + 4;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentItems(pokemons.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(pokemons.length / 2));
+    setPageCount(Math.ceil(pokemons.length / 4));
   }, [itemOffset, pokemons]);
 
   React.useEffect(() => {
@@ -79,11 +79,8 @@ export default function Home() {
   };
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * 2) % pokemons.length;
+    const newOffset = (event.selected * 4) % pokemons.length;
     console.log(newOffset);
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
   };
 
@@ -95,7 +92,15 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <Text
+        fontSize={"xx-large"}
+        justifyContent={"center"}
+        textAlign={"center"}
+        fontWeight={"bold"}
+        marginTop={{ base: "20px" }}
+      >
+        Pokemons List
+      </Text>
       <Flex alignItems="center" minH="100vh" justifyContent="center">
         <Container>
           <Stack
@@ -113,7 +118,7 @@ export default function Home() {
               spacingY="20px"
               columns={{ base: 1, sm: 1, md: 4 }}
               justifyContent={"space-between"}
-              marginTop={{ md: "-200px" }}
+              marginTop={{ base: "40px", md: "-220px" }}
               marginRight={{ md: "300px" }}
             >
               {currentItems?.map((pokemon: Pokemon, index: number) => (
@@ -128,7 +133,7 @@ export default function Home() {
             </SimpleGrid>
             <Box
               width={{ base: 300, md: "100vw" }}
-              marginLeft={{ base: "50px", md: "300px" }}
+              marginLeft={{ base: "10px", md: "300px" }}
               marginTop={{ base: "50px" }}
               marginRight={{ md: "300px" }}
             >
@@ -146,7 +151,7 @@ export default function Home() {
             </Box>
 
             <Button
-              width={{ base: "80%" }}
+              width={{ base: "70%" }}
               isLoading={isLoading}
               onClick={handleNextPage}
               display={"flex"}
@@ -165,7 +170,7 @@ export default function Home() {
       </Flex>
       <Modal {...pokemonDataModal} isCentered size={"xl"}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent minHeight={{ base: "400px", md: "635px" }}>
           <ModalHeader textTransform="capitalize">
             {selectedPokemon && selectedPokemon.name}
           </ModalHeader>
