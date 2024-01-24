@@ -12,7 +12,6 @@ import {
 interface Props extends Pokemon {}
 
 export const PokemonCard: React.FC<Props> = (pokemon: Props) => {
-  console.log(pokemon);
   return (
     <Stack
       spacing="4"
@@ -24,10 +23,11 @@ export const PokemonCard: React.FC<Props> = (pokemon: Props) => {
       width={300}
       display={"flex"}
     >
-      <Box backgroundColor={"#E3E4E5"} width={"100%"}>
+      <Box backgroundColor={"#E3E4E5"} width={"100%"} borderRadius="xl">
         <AspectRatio w="full" ratio={1}>
           <Image
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemon.id}.png`}
+            alt="pokemon"
           />
         </AspectRatio>
         <Text textAlign="center" textTransform="capitalize">

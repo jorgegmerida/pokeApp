@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     const query = req.query;
     const { pokemonId } = query;
-    var data = await db.getData("/");
+    var data = await db.getData("/catchedPokemon");
 
     return res
       .status(200)

@@ -27,18 +27,17 @@ import { Header } from "@/ui/header";
 export default function Home() {
   const pokemonDataModal = useDisclosure();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [pokemons, setPokemons] = React.useState<Pokemon[]>([]);
   const [selectedPokemon, setSelectedPokemon] = React.useState<Pokemon>();
-  const [currentPage, setCurrentPage] = useState(
-    "https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0"
-  );
+  const [pokeOffset, setPokeOffset] = React.useState(0);
 
-  useEffect(() => {
-    setIsLoading(true);
+  React.useEffect(() => {
     async function getPokemon() {
       try {
-        const res = await axios.get(currentPage);
+        const res = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/?limit=20&offset=${pokeOffset}`
+        );
         if (res.data?.results!.length === 0) {
           console.error("No hay datos");
         } else {
@@ -55,15 +54,18 @@ export default function Home() {
       }
     }
     getPokemon();
-  }, [currentPage]);
+  }, [pokeOffset]);
 
-  function handleNextPage() {}
+  const handleNextPage = () => {
+    setPokeOffset((prev) => prev + 20);
+    setIsLoading(!isLoading);
+  };
 
-  function handleViewPokemon(pokemon) {
+  const handleViewPokemon = (pokemon) => {
     setSelectedPokemon(pokemon);
     pokemonDataModal.onOpen();
-  }
-  console.log(pokemons);
+  };
+
   return (
     <>
       <Head>
@@ -72,25 +74,33 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+
       <Flex
         alignItems="center"
         minH="100vh"
         justifyContent="center"
-        marginRight={{ sm: "0px", md: "200px" }}
+        marginRight={{ md: "300px" }}
       >
         <Container>
-          <Stack p="5" alignItems="center" spacing="4">
+          <Stack
+            p="0"
+            alignItems="center"
+            spacing="0"
+            justifyContent={"center"}
+            alignContent={"center"}
+            textAlign={"center"}
+            marginTop={"50px"}
+          >
             <SimpleGrid
               spacingX={{ md: "440px" }}
               spacingY="20px"
               columns={{ base: 1, sm: 1, md: 3 }}
               justifyContent={"space-between"}
             >
-              {pokemons.map((pokemon: Pokemon) => (
+              {pokemons.map((pokemon: Pokemon, index: number) => (
                 <Box
                   as="button"
-                  key={pokemon.id}
+                  key={index}
                   onClick={() => handleViewPokemon(pokemon)}
                 >
                   <PokemonCard {...pokemon} />
@@ -98,13 +108,26 @@ export default function Home() {
               ))}
             </SimpleGrid>
 
-            <Button isLoading={false} onClick={handleNextPage}>
+            <Button
+              width={"100%"}
+              isLoading={isLoading}
+              onClick={handleNextPage}
+              display={"flex"}
+              marginTop={"120px"}
+              marginBottom={10}
+              marginLeft={{ md: "300px" }}
+              color={"#E2E2E2"}
+              colorScheme={"#E2E2E2"}
+              backgroundColor={"#FF0000"}
+              _hover={{ bg: "#C30010", borderColor: "black" }}
+              borderRadius={"xl"}
+            >
               Cargas más
             </Button>
           </Stack>
         </Container>
       </Flex>
-      <Modal {...pokemonDataModal} isCentered>
+      <Modal {...pokemonDataModal} isCentered size={"xl"}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textTransform="capitalize">
@@ -112,7 +135,7 @@ export default function Home() {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {selectedPokemon && <PokemonData pokemon={selectedPokemon} />}
+            {selectedPokemon && <PokemonData {...selectedPokemon} />}
           </ModalBody>
         </ModalContent>
       </Modal>

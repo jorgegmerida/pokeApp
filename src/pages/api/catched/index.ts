@@ -7,12 +7,9 @@ export default async function handler(req, res) {
 
     return res.status(200).json(data);
   } else if (req.method === "POST") {
-    const newPokemon = {
-      id: req.body.id,
-      name: req.body.name,
-    };
+    const newPokemon = req.body.pokeData;
 
-    const index = await db.getIndex("/catchedPokemon", Number(newPokemon.id));
+    const index = await db.getIndex("/catchedPokemon", Number(req.body.id));
 
     if (index === -1) {
       await db.push("/catchedPokemon[]", newPokemon);

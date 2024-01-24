@@ -9,10 +9,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/router";
 
 export const Header: React.FC = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
+  const router = useRouter();
+
   return (
     <Flex
       as="nav"
@@ -48,10 +51,24 @@ export const Header: React.FC = (props) => {
         alignItems="center"
         flexGrow={1}
         mt={{ base: 4, md: 0 }}
+        marginLeft={{ md: "50px" }}
+        gap={50}
       >
-        <Text>Docs</Text>
-        <Text>Examples</Text>
-        <Text>Blog</Text>
+        <Button
+          backgroundColor={"#F2F2F2"}
+          _hover={{ bg: "#D2D2D2", borderColor: "black" }}
+          onClick={() => {
+            if (router.pathname === "/catched") {
+              router.push("/");
+            } else {
+              router.push("/catched");
+            }
+          }}
+        >
+          {router.pathname === "/catched"
+            ? "Go Pokemon Home"
+            : "Go Pokemon Catched"}
+        </Button>
       </Stack>
 
       <Box
