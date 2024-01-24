@@ -1,10 +1,8 @@
 import Head from "next/head";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import {
   Container,
   Stack,
-  Input,
   Button,
   SimpleGrid,
   Flex,
@@ -20,6 +18,7 @@ import {
 import React from "react";
 import { PokemonCard, PokemonData } from "@/components";
 import { Pokemon } from "@/models";
+import ReactPaginate from "react-paginate";
 
 export default function Home() {
   const pokemonDataModal = useDisclosure();
@@ -31,6 +30,19 @@ export default function Home() {
   const [selectedPokemon, setSelectedPokemon] = React.useState<Pokemon>();
 
   const [pokeOffset, setPokeOffset] = React.useState(0);
+
+  const [itemOffset, setItemOffset] = React.useState(0);
+
+  const [currentItems, setCurrentItems] = React.useState<Pokemon[]>();
+
+  const [pageCount, setPageCount] = React.useState(0);
+
+  React.useEffect(() => {
+    const endOffset = itemOffset + 4;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    setCurrentItems(pokemons.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(pokemons.length / 2));
+  }, [itemOffset, pokemons]);
 
   React.useEffect(() => {
     async function getPokemon() {
@@ -66,6 +78,15 @@ export default function Home() {
     pokemonDataModal.onOpen();
   };
 
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * 2) % pokemons.length;
+    console.log(newOffset);
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
   return (
     <>
       <Head>
@@ -75,12 +96,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Flex
-        alignItems="center"
-        minH="100vh"
-        justifyContent="center"
-        marginRight={{ md: "300px" }}
-      >
+      <Flex alignItems="center" minH="100vh" justifyContent="center">
         <Container>
           <Stack
             p="0"
@@ -89,15 +105,18 @@ export default function Home() {
             justifyContent={"center"}
             alignContent={"center"}
             textAlign={"center"}
-            marginTop={"50px"}
+            justifyItems={"center"}
+            direction={{ base: "column" }}
           >
             <SimpleGrid
               spacingX={{ md: "440px" }}
               spacingY="20px"
-              columns={{ base: 1, sm: 1, md: 3 }}
+              columns={{ base: 1, sm: 1, md: 4 }}
               justifyContent={"space-between"}
+              marginTop={{ md: "-200px" }}
+              marginRight={{ md: "300px" }}
             >
-              {pokemons.map((pokemon: Pokemon, index: number) => (
+              {currentItems?.map((pokemon: Pokemon, index: number) => (
                 <Box
                   as="button"
                   key={index}
@@ -107,15 +126,32 @@ export default function Home() {
                 </Box>
               ))}
             </SimpleGrid>
+            <Box
+              width={{ base: 300, md: "100vw" }}
+              marginLeft={{ base: "50px", md: "300px" }}
+              marginTop={{ base: "50px" }}
+              marginRight={{ md: "300px" }}
+            >
+              <ReactPaginate
+                breakLinkClassName={"break-me"}
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={10}
+                pageCount={pageCount}
+                previousLabel="< previous"
+                renderOnZeroPageCount={null}
+                containerClassName={"pagination"}
+              />
+            </Box>
 
             <Button
-              width={"100%"}
+              width={{ base: "80%" }}
               isLoading={isLoading}
               onClick={handleNextPage}
               display={"flex"}
-              marginTop={{ sm: "80px", md: "120px" }}
-              marginBottom={{ sm: 20, md: 10 }}
-              marginLeft={{ md: "300px" }}
+              marginTop={{ base: "20px" }}
+              marginBottom={{ base: 10 }}
               color={"#E2E2E2"}
               colorScheme={"#E2E2E2"}
               backgroundColor={"#FF0000"}
