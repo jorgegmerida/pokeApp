@@ -17,6 +17,7 @@ import {
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@chakra-ui/react";
+import Link from "next/link";
 
 export const Header: React.FC = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,16 +45,11 @@ export const Header: React.FC = (props) => {
       position={"sticky"}
     >
       <Flex align="center" mr={5}>
-        <Heading
-          size="lg"
-          letterSpacing={"tighter"}
-          onClick={() => {
-            router.push("/");
-          }}
-          cursor={"pointer"}
-        >
-          PokeApp
-        </Heading>
+        <Link href="/">
+          <Heading size="lg" letterSpacing={"tighter"} cursor={"pointer"}>
+            PokeApp
+          </Heading>
+        </Link>
       </Flex>
 
       <Box
@@ -90,21 +86,16 @@ export const Header: React.FC = (props) => {
             mt={{ base: 14 }}
             gap={50}
           >
-            <Button
-              backgroundColor={"#F2F2F2"}
-              _hover={{ bg: "#D2D2D2", borderColor: "black" }}
-              onClick={() => {
-                if (router.pathname === "/catched") {
-                  router.push("/");
-                } else {
-                  router.push("/catched");
-                }
-              }}
-            >
-              {router.pathname === "/catched"
-                ? "Go Pokemon Home"
-                : "Go Pokemon Catched"}
-            </Button>
+            <Link href={router.pathname === "/catched" ? "/" : "/catched"}>
+              <Button
+                backgroundColor={"#F2F2F2"}
+                _hover={{ bg: "#D2D2D2", borderColor: "black" }}
+              >
+                {router.pathname === "/catched"
+                  ? "Go Pokemon Home"
+                  : "Go Pokemon Catched"}
+              </Button>
+            </Link>
           </Stack>
         </>
       ) : (
@@ -119,21 +110,16 @@ export const Header: React.FC = (props) => {
             marginLeft={{ md: "50px" }}
             gap={50}
           >
-            <Button
-              backgroundColor={"#F2F2F2"}
-              _hover={{ bg: "#D2D2D2", borderColor: "black" }}
-              onClick={() => {
-                if (router.pathname === "/catched") {
-                  router.push("/");
-                } else {
-                  router.push("/catched");
-                }
-              }}
-            >
-              {router.pathname === "/catched"
-                ? "Go Pokemon Home"
-                : "Go Pokemon Catched"}
-            </Button>
+            <Link href={router.pathname === "/catched" ? "/" : "/catched"}>
+              <Button
+                backgroundColor={"#F2F2F2"}
+                _hover={{ bg: "#D2D2D2", borderColor: "black" }}
+              >
+                {router.pathname === "/catched"
+                  ? "Go Pokemon Home"
+                  : "Go Pokemon Catched"}
+              </Button>
+            </Link>
           </Stack>
 
           <Box

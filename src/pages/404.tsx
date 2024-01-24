@@ -1,9 +1,7 @@
 import { Box, Stack, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Custom404() {
-  const router = useRouter();
-
   return (
     <Box
       display={"flex"}
@@ -13,13 +11,11 @@ export default function Custom404() {
     >
       <Stack direction={"column"} spacing={50}>
         <Text fontSize={"xx-large"}>404 - Page Not Found</Text>
-        <Text
-          fontSize={"x-large"}
-          onClick={() => router.push("/")}
-          cursor={"pointer"}
-        >
-          Back to Home
-        </Text>
+        <Link href="/">
+          <Text fontSize={"x-large"} cursor={"pointer"}>
+            Back to Home
+          </Text>
+        </Link>
       </Stack>
     </Box>
   );

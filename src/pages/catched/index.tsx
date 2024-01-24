@@ -221,7 +221,7 @@ const Catched: React.FC<Props> = () => {
         </Modal>
         <Modal {...pokemonDelete} isCentered size={"xl"}>
           <ModalOverlay />
-          <ModalContent height={"200px"}>
+          <ModalContent height={"200px"} width={{ base: "auto", md: "100%" }}>
             <ModalHeader textTransform="capitalize">
               {selectedPokemon && selectedPokemon.name}
             </ModalHeader>
@@ -244,7 +244,7 @@ const Catched: React.FC<Props> = () => {
         </Modal>
         <Modal {...pokemonDeleteError} isCentered size={"xl"}>
           <ModalOverlay />
-          <ModalContent height={"200px"}>
+          <ModalContent height={"200px"} width={{ base: "auto", md: "100%" }}>
             <ModalHeader textTransform="capitalize">
               <Text fontSize={"xx-large"}>Error</Text>
             </ModalHeader>
