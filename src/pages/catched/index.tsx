@@ -38,9 +38,17 @@ const Catched: React.FC<Props> = () => {
 
   const [showData, setShowData] = React.useState(false);
 
+  const [errorDelete, setErrorDelete] = React.useState<string>("");
+
   const [deletePokemon, setDeletePokemon] = React.useState(false);
 
+  const [dataDelete, setDataDelete] = React.useState<string>("");
+
   const pokemonDataModal = useDisclosure();
+
+  const pokemonDelete = useDisclosure();
+
+  const pokemonDeleteError = useDisclosure();
 
   React.useEffect(() => {
     const getCatchedPokemon = async () => {
@@ -62,10 +70,14 @@ const Catched: React.FC<Props> = () => {
     try {
       const res = await axios.delete(`/api/catched/${pokemonId}`);
       if (res.status === 200) {
+        setDataDelete(res?.data!);
+        pokemonDelete.onOpen();
         setDeletePokemon(!deletePokemon);
       }
     } catch (error) {
       console.error(error);
+      setErrorDelete(error.response?.data!);
+      pokemonDeleteError.onOpen();
     }
   };
 
@@ -194,6 +206,51 @@ const Catched: React.FC<Props> = () => {
             <ModalCloseButton />
             <ModalBody>
               {selectedPokemon && <PokemonData {...selectedPokemon} />}
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+        <Modal {...pokemonDelete} isCentered size={"xl"}>
+          <ModalOverlay />
+          <ModalContent height={"200px"}>
+            <ModalHeader textTransform="capitalize">
+              {selectedPokemon && selectedPokemon.name}
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody
+              justifyContent={"center"}
+              alignItems={"center"}
+              alignContent={"center"}
+            >
+              <Text
+                fontSize={"xx-large"}
+                marginTop={"30px"}
+                justifyContent={"center"}
+                textAlign={"center"}
+              >
+                {dataDelete}
+              </Text>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+        <Modal {...pokemonDeleteError} isCentered size={"xl"}>
+          <ModalOverlay />
+          <ModalContent height={"200px"}>
+            <ModalHeader textTransform="capitalize">
+              <Text fontSize={"xx-large"}>Error</Text>
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody
+              justifyContent={"center"}
+              alignItems={"center"}
+              alignContent={"center"}
+            >
+              <Text
+                fontSize={"x-large"}
+                justifyContent={"center"}
+                textAlign={"center"}
+              >
+                {errorDelete}
+              </Text>
             </ModalBody>
           </ModalContent>
         </Modal>
