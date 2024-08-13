@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   const filePath = path.resolve('.','db.json');
      // Leer el archivo db.json
   if (req.method === "GET") {
-    
+    console.log("get");
     const jsonData = fs.readFileSync(filePath);
 
     const data = JSON.parse(jsonData.toString());
@@ -17,6 +17,7 @@ export default async function handler(req, res) {
     return res.status(200).json(data);
   } else if (req.method === "POST") {
     const dbPath = path.resolve('.', 'db.json');
+    console.log("post");
     // Leer el archivo db.json
     const jsonData = fs.readFileSync(dbPath);
     const data = JSON.parse(jsonData.toString());
