@@ -4,9 +4,7 @@ import path from 'path';
 
 export default async function handler(req, res) {
   // const db = new JsonDB(new Config("db", true, false, "/"));
-  //ruta a db.json   
   const filePath = path.resolve('.','db.json');
-     // Leer el archivo db.json
   if (req.method === "GET") {
     console.log("get");
     const jsonData = fs.readFileSync(filePath);
