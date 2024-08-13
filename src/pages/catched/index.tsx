@@ -1,5 +1,5 @@
 import { PokemonData } from "@/components";
-import { Pokemon } from "@/models";
+import { Pokemon, PokemonArray } from "@/models";
 import {
   Box,
   AspectRatio,
@@ -32,7 +32,7 @@ import * as React from "react";
 interface Props {}
 
 const Catched: React.FC<Props> = () => {
-  const [pokemonCatched, setPokemonCatched] = React.useState<Pokemon[]>([]);
+  const [pokemonCatched, setPokemonCatched] = React.useState<PokemonArray>();
 
   const [selectedPokemon, setSelectedPokemon] = React.useState<Pokemon>();
 
@@ -107,7 +107,7 @@ const Catched: React.FC<Props> = () => {
           alignItems={"center"}
           margin={"50px 50px"}
         >
-          {pokemonCatched?.map((pokemon: Pokemon, index: number) => (
+          {pokemonCatched.catchedPokemon?.map((pokemon: Pokemon, index: number) => (
             <Box key={index}>
               <Stack
                 direction={"column"}

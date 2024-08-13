@@ -33,3 +33,7 @@ export interface Pokemon {
   types: Array<{ slot: number; type: { name: string; url: string } }>;
   weight: number;
 }
+
+export interface PokemonArray{
+  catchedPokemon: Pokemon[]
+}
