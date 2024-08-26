@@ -80,7 +80,6 @@ export default function Home() {
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * 4) % pokemons.length;
-    console.log(newOffset);
     setItemOffset(newOffset);
   };
 

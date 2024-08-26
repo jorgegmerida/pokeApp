@@ -30,7 +30,7 @@ export interface Pokemon {
   other: any;
   versions: any;
   stats: Array<{}>;
-  types: Array<{ slot: number; type: { name: string; url: string } }>;
+  types: any;
   weight: number;
 }
 
