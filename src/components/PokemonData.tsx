@@ -35,7 +35,7 @@ export const PokemonData: React.FC<Props> = (pokemon) => {
   React.useEffect(() => {
     const getCatchedPokemon = async () => {
       try {
-        const res = await axios.get(`https://poke-app-umber-sigma.vercel.app/api/catched/${pokemon.id}`);
+        const res = await axios.get(`https://apirestpoke.onrender.com/catchedsPokemons/${pokemon.id}`);
         if (res.status === 200) {
           setCatched(res.data);
           setShowDataCached((prev) => res.data);
@@ -54,15 +54,18 @@ export const PokemonData: React.FC<Props> = (pokemon) => {
       pokeData: pokemon,
     };
     try {
-      const res = await axios.post("https://poke-app-umber-sigma.vercel.app/api/catched", body, {
+      const res = await axios.post("https://apirestpoke.onrender.com/pokemon", body.pokeData, {
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Expose-Headers": "Content-Length",
         },
       });
       if (res.status === 200) {
         router.push("/catched");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

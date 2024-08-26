@@ -32,7 +32,7 @@ import * as React from "react";
 interface Props {}
 
 const Catched: React.FC<Props> = () => {
-  const [pokemonCatched, setPokemonCatched] = React.useState<PokemonArray>();
+  const [pokemonCatched, setPokemonCatched] = React.useState<Pokemon[]>();
 
   const [selectedPokemon, setSelectedPokemon] = React.useState<Pokemon>();
 
@@ -53,7 +53,7 @@ const Catched: React.FC<Props> = () => {
   React.useEffect(() => {
     const getCatchedPokemon = async () => {
       try {
-        const res = await axios.get("/api/catched");
+        const res = await axios.get("https://apirestpoke.onrender.com/catchedsPokemons");
         if (res.status === 200) {
           setPokemonCatched(res.data);
           setShowData(true);
@@ -68,7 +68,7 @@ const Catched: React.FC<Props> = () => {
 
   const handleFreePokemon = async (pokemon: Pokemon) => {
     try {
-      const res = await axios.delete(`/api/catched/${pokemon.id}`);
+      const res = await axios.delete(`https://apirestpoke.onrender.com/freePokemon/${pokemon.id}`);
       if (res.status === 200) {
         setSelectedPokemon(pokemon);
         setDataDelete(res?.data!);
@@ -107,7 +107,7 @@ const Catched: React.FC<Props> = () => {
           alignItems={"center"}
           margin={"50px 50px"}
         >
-          {pokemonCatched.catchedPokemon?.map((pokemon: Pokemon, index: number) => (
+          {pokemonCatched?.map((pokemon: Pokemon, index: number) => (
             <Box key={index}>
               <Stack
                 direction={"column"}
