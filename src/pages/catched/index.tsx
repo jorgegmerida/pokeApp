@@ -53,7 +53,7 @@ const Catched: React.FC<Props> = () => {
   React.useEffect(() => {
     const getCatchedPokemon = async () => {
       try {
-        const res = await axios.get("https://apirestpoke.onrender.com/catchedsPokemons",{ withCredentials: true });
+        const res = await axios.get("https://apirestpoke.onrender.com/catchedsPokemons");
         if (res.status === 200) {
           setPokemonCatched(res.data);
           setShowData(true);
